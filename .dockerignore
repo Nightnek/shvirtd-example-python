@@ -1,5 +1,5 @@
-/haproxy
-/nginx
+./haproxy
+./nginx
 .env
 LICENSE
 not_tested_main.py

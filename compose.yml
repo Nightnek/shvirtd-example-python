@@ -3,8 +3,6 @@ services:
   bd:
     image: mysql/mysql-server
     restart: always
-    networks:
-      - app
     environment:
       MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
       MYSQL_DATABASE: $MYSQL_DATABASE
@@ -19,7 +17,7 @@ services:
   app:
     image: python/webapp
     build:
-      secrets:
+      args:
         - DB_USER=$MYSQL_USER
         - DB_PASSWORD=$MYSQL_PASSWORD
         - DB_NAME=$MYSQL_DATABASE
@@ -29,9 +27,3 @@ services:
     restart: always
     ports:
       - "5000:5000"
-    networks:
-      - app
-
-networks:
-  app:
-    driver: bridge

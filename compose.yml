@@ -18,12 +18,13 @@ services:
   app:
     image: python/webapp
     build:
-      args:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
         - DB_USER=$MYSQL_USER
         - DB_PASSWORD=$MYSQL_PASSWORD
         - DB_NAME=$MYSQL_DATABASE
         - DB_HOST=bd
-      dockerfile: ./Dockerfile
     depends_on:
       - bd
     restart: always

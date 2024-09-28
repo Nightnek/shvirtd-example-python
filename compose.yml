@@ -3,6 +3,8 @@ services:
   bd:
     image: mysql/mysql-server
     restart: always
+    networks:
+      - app
     environment:
       MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
       MYSQL_DATABASE: $MYSQL_DATABASE
@@ -18,7 +20,18 @@ services:
     image: python/webapp
     build:
       dockerfile: ./Dockerfile
+      args:
+        - DB_USER=$MYSQL_USER
+        - DB_PASSWORD=$MYSQL_PASSWORD
+        - DB_NAME=$MYSQL_DATABASE
     depends_on:
       - bd
+    restart: always
     ports:
       - "5000:5000"
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge

@@ -1,4 +1,4 @@
-version: 1.1
+version: '1.1'
 services:
   bd:
     image: mysql/mysql-server
@@ -17,4 +17,8 @@ services:
   app:
     image: python/webapp
     build:
-      dockerfile: ../Dockerfile
+      dockerfile: ./Dockerfile
+    depends_on:
+      - bd
+    ports:
+      - "5000:5000"

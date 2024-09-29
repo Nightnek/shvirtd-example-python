@@ -32,7 +32,7 @@ services:
         - DB_PASSWORD=$MYSQL_PASSWORD
         - DB_NAME=$MYSQL_DATABASE
         - DB_HOST=db
-        - DB_TABLE=request_history
+        - DB_TABLE=requests
     depends_on:
       - db
     restart: always

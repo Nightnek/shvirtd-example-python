@@ -1,6 +1,10 @@
 version: '1.1'
+
+include:
+  - proxy.yaml
+
 services:
-  bd:
+  db:
     image: mysql/mysql-server
     restart: always
     environment:
@@ -9,13 +13,16 @@ services:
       MYSQL_USER: $MYSQL_USER
       MYSQL_PASSWORD: $MYSQL_PASSWORD
       MYSQL_ROOT_HOST: "%"
+    networks:
+      backend:
+        ipv4_address: 172.20.0.10
     ports:
       - "3306:3306"
       - "33060:33060"
     volumes:
       - ./mysql:/var/lib/mysql
 
-  app:
+  web:
     image: python/webapp
     build:
       context: .
@@ -24,10 +31,13 @@ services:
         - DB_USER=$MYSQL_USER
         - DB_PASSWORD=$MYSQL_PASSWORD
         - DB_NAME=$MYSQL_DATABASE
-        - DB_HOST=bd
+        - DB_HOST=db
         - DB_TABLE=request_history
     depends_on:
-      - bd
+      - db
     restart: always
+    networks:
+      backend:
+        ipv4_address: 172.20.0.5
     ports:
       - "5000:5000"

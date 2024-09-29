@@ -25,6 +25,7 @@ services:
         - DB_PASSWORD=$MYSQL_PASSWORD
         - DB_NAME=$MYSQL_DATABASE
         - DB_HOST=bd
+        - DB_TABLE=request_history
     depends_on:
       - bd
     restart: always
